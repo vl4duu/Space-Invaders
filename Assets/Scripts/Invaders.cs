@@ -9,7 +9,9 @@ public class Invaders : MonoBehaviour
     private Vector3 _direction = Vector2.right;
     void Awake()
     {
+        // Populate the screen with invaders
         for (int row = 0; row < this.rows; row++){
+            // Center all variations of rows and columns
             float width = 2.0f * (this.columns -1);
             float height = 2.0f * (this.rows -1);
             Vector2 centering = new Vector2(-width /2, -height /2) ;
@@ -31,17 +33,20 @@ public class Invaders : MonoBehaviour
         Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
         foreach(Transform invader in this.transform)
         {
-            if(!invader.gameObject.activeInHierarchy){
+            if(!invader.gameObject.activeInHierarchy){ // Check is invader is still alive
                 continue;
             }
+            // If the invader reaches the right edge change movment direction
             if(_direction == Vector3.right && invader.position.x >= (rightEdge.x - 1.0f)){
                 AdvanceRow();
+            // If the invader reaches the left edge change movment direction
             }else if(_direction == Vector3.left && invader.position.x <= (leftEdge.x + 1.0f)){
                 AdvanceRow();
             }
         }
     }
 
+    // Make invader move left and right.
     private void AdvanceRow(){
         _direction.x *= -1.0f;
 
