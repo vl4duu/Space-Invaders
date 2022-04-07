@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 109754017}
   - component: {fileID: 109754016}
   m_Layer: 0
-  m_Name: SimplePixelSpaceships_57 (1)
+  m_Name: Left rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,7 +203,7 @@ Transform:
   m_LocalScale: {x: 4.5843, y: 4.5843, z: 4.5843}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 671124600}
   - component: {fileID: 671124599}
   m_Layer: 0
-  m_Name: SimplePixelSpaceships_57
+  m_Name: Middle rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,7 +450,7 @@ Transform:
   m_LocalScale: {x: 4.5843, y: 4.5843, z: 4.5843}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &964731016
 GameObject:
@@ -493,9 +493,34 @@ MonoBehaviour:
   - {fileID: 5575311047551895666, guid: 673792951472b894d93d2726c01ac68e, type: 3}
   - {fileID: 5575311047551895666, guid: 673792951472b894d93d2726c01ac68e, type: 3}
   - {fileID: 5575311047551895666, guid: 673792951472b894d93d2726c01ac68e, type: 3}
+  - {fileID: 5575311047551895666, guid: 673792951472b894d93d2726c01ac68e, type: 3}
+  - {fileID: 5575311047551895666, guid: 673792951472b894d93d2726c01ac68e, type: 3}
   rows: 4
   columns: 11
-  speed: 4.27
+  speed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 8
+      inSlope: 26.0416
+      outSlope: 26.0416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03607297
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &964731018
 Transform:
   m_ObjectHideFlags: 0
@@ -508,7 +533,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1464412812
 GameObject:
@@ -521,8 +546,9 @@ GameObject:
   - component: {fileID: 1464412815}
   - component: {fileID: 1464412814}
   - component: {fileID: 1464412813}
-  m_Layer: 0
-  m_Name: SimplePixelSpaceships_40
+  - component: {fileID: 1464412816}
+  m_Layer: 6
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,8 +643,22 @@ Transform:
   m_LocalScale: {x: 1.413278, y: 1.413278, z: 1.413278}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1464412816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464412812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f84f72e5addec468cd30b7cb4c07ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserPrefab: {fileID: 1701049939107168849, guid: bdba02dcf39de9541a9ece36035c9950, type: 3}
+  speed: 5
 --- !u!1 &1875269796
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,19 +676,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1875269797
-BoxCollider:
+--- !u!61 &1875269797
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875269796}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!4 &1875269798
 Transform:
   m_ObjectHideFlags: 0
@@ -661,7 +714,7 @@ Transform:
   m_LocalScale: {x: 30, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2042840145
 GameObject:
@@ -674,7 +727,7 @@ GameObject:
   - component: {fileID: 2042840147}
   - component: {fileID: 2042840146}
   m_Layer: 0
-  m_Name: SimplePixelSpaceships_57 (2)
+  m_Name: Right rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
