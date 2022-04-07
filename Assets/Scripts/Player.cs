@@ -38,8 +38,9 @@ public class Player : MonoBehaviour
 
         public void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Missile")){
-            Debug.Log("Dead!");
-            this.dead.Invoke();
+            // Debug.Log("Dead!");
+            // Debug.Log("!"+ this.dead.GetType().ToString());
+            // this.dead.Invoke();        
             this.gameObject.SetActive(false);
         }
     }

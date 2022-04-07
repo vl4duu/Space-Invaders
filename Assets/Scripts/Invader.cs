@@ -12,6 +12,7 @@ public class Invader : MonoBehaviour
 
     private void Awake(){
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Log("Hello! :D");
     }
 
 

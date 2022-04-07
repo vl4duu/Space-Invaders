@@ -14,8 +14,10 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
         // Debug.Log("Bang!");
-        if(this.destroyed != null){
-            this.destroyed.Invoke();
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player")){
+            if(this.destroyed != null){
+                this.destroyed.Invoke();
+            }
         }
         Destroy(this.gameObject);
     }
