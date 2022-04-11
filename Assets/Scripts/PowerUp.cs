@@ -2,27 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUp : Projectile
-{
-    // Start is called before the first frame update
-    void Start()
+public class Powerup : Projectile
+{   
+    public float multiplier = 2f;
+    public int timer = 3;
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player")){
+            
+            StartCoroutine(Pickup(other));
+            
+        }
+    }
+
+    private IEnumerator Pickup(Collider2D player){
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        // Speed up
+        player.gameObject.GetComponent<Player>().speed *= multiplier;
+         // Wait
+        
+        yield return new WaitForSeconds(this.timer);
+        // Speed down
+         player.gameObject.GetComponent<Player>().speed /= multiplier;
+        Debug.Log("After");
+        Destroy(gameObject);
+        
+
         
     }
 
-    // Update is called once per frame
-    private void Update(){
-        this.transform.position += this.direction * this.speed * Time.deltaTime;
-    }
-
-        private void OnTriggerEnter2D(Collider2D other){
-        // Debug.Log("Bang!");
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player")){
-            // Debug.Log('Activate');
-            if(this.destroyed != null){
-            this.destroyed.Invoke();
-        }
-        Destroy(this.gameObject);
-        }
-    }
 }

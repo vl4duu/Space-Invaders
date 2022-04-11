@@ -8,11 +8,11 @@ public class Invader : MonoBehaviour
     public float animationTime;
     private SpriteRenderer _spriteRenderer;
     private int _animationFrame;
+   
 
 
     private void Awake(){
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Log("Hello! :D");
     }
 
 
