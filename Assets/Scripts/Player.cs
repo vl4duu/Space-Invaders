@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int lifes = 3;
     bool _laserActive;
-    public Projectile laserPrefab;
-    public float speed = 5.0f;
+    
 
     public System.Action dead;
 
 
     private void Update()
     {
+        if (lifes <= 0)
+        {
+            Destroy(this.gameObject);
+        }
         Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
 
@@ -21,14 +25,14 @@ public class Player : MonoBehaviour
         {
             if (this.transform.position.x >= (leftEdge.x + 1f))
             {
-                this.transform.position += Vector3.left * this.speed * Time.deltaTime;
+                this.GetComponent<Movement>().MoveLeft();
             }
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             if (this.transform.position.x <= (rightEdge.x - 1f))
             {
-                this.transform.position -= Vector3.left * this.speed * Time.deltaTime;
+                this.GetComponent<Movement>().MoveRight();
             }
         }
 
@@ -43,7 +47,7 @@ public class Player : MonoBehaviour
     {
         if (!_laserActive)
         {
-            Projectile projectile = Instantiate(this.laserPrefab, this.transform.position, Quaternion.identity);
+            Projectile projectile = this.GetComponent<Shoot>().Fire();
             projectile.destroyed += LaserDestroyed;
             _laserActive = true;
         }
@@ -58,10 +62,8 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Missile"))
         {
-            // Debug.Log("Dead!");
-            // Debug.Log("!"+ this.dead.GetType().ToString());
-            // this.dead.Invoke();        
-            this.gameObject.SetActive(false);
+            this.lifes -= 1;
+            Debug.Log(this.lifes + " lifes left");
         }
     }
 }

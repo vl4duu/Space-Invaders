@@ -1,22 +1,31 @@
 using UnityEngine;
 
-public abstract class Invaders : MonoBehaviour
+public class Invaders : MonoBehaviour
 {
     public Invader[] prefabs;
     public Projectile missilePrefab;
-    public Projectile activeMissile => missilePrefab;
     public int rows = 5;
     public int columns = 11;
     public AnimationCurve speed;
-    public float missileAttackRate = 2.0f;
-    public float speedMultiplier = 1;
+    public float missileAttackRate = 5;
     private int amountKilled { get; set; }
     private Vector3 _direction = Vector2.right;
     private int totalInvaders => rows * columns;
     private float percentKilled => (float) this.amountKilled / (float) this.totalInvaders;
     public int amountAlive => this.totalInvaders - this.amountKilled;
-    
-    
+    public float bulletSpeedMultiplier = 1;
+    public float speedMultiplier = 1;
+
+    public float SpeedMultiplier
+    {
+        get { return speedMultiplier;}
+        set { speedMultiplier = value; }
+    }
+    public float BulletSpeedMultiplier
+    {
+        set { bulletSpeedMultiplier = value; }
+        get { return bulletSpeedMultiplier; }
+    }
 
     void Awake()
     {
@@ -30,7 +39,8 @@ public abstract class Invaders : MonoBehaviour
             Vector2 centering = new Vector2(-width / 2, -height / 2);
             Vector3 rowPosition = new Vector3(centering.x, centering.y + (row * 3.0f), 0.0f);
 
-            for(int column = 0; column < this.columns; column++){
+            for (int column = 0; column < this.columns; column++)
+            {
                 Invader invader = Instantiate(this.prefabs[row], this.transform);
                 invader.killed += InvaderKilled;
                 Vector3 position = rowPosition;
@@ -38,19 +48,17 @@ public abstract class Invaders : MonoBehaviour
                 invader.transform.localPosition = position;
             }
         }
-
-        
     }
 
     private void Start()
     {
-        
         InvokeRepeating(nameof(MissileAttack), this.missileAttackRate, this.missileAttackRate);
     }
 
     private void Update()
-    { 
-        this.transform.position += _direction * this.speed.Evaluate(this.percentKilled) * Time.deltaTime * speedMultiplier;
+    {
+        this.transform.position +=
+            _direction * this.speed.Evaluate(this.percentKilled) * Time.deltaTime * speedMultiplier;
         Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
         Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
         foreach (Transform invader in this.transform)
@@ -72,7 +80,6 @@ public abstract class Invaders : MonoBehaviour
                 AdvanceRow();
             }
         }
-        
     }
 
     // Make invader move left and right.
@@ -88,9 +95,9 @@ public abstract class Invaders : MonoBehaviour
                 continue;
             }
 
-            if (Random.value < (1.0f / (float) this.amountAlive))
+            if (Random.value < (1.0f / (float) this.amountAlive * 1.1))
             {
-                Instantiate(this.activeMissile, invader.position, Quaternion.identity);
+                invader.GetComponent<Shoot>().Fire();
                 break;
             }
         }

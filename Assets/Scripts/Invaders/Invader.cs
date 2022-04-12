@@ -8,7 +8,7 @@ public class Invader : MonoBehaviour
     public float animationTime;
     private SpriteRenderer _spriteRenderer;
     private int _animationFrame;
-   
+
 
 
     private void Awake(){
@@ -21,7 +21,8 @@ public class Invader : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Laser")){
             this.killed.Invoke();
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
+            
         }
     }
 
