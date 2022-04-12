@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: -1, z: 0}
   speed: 15
+  isActive: 0
 --- !u!114 &-5153983555817081535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,8 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec09db6567a853408e54a426eeb9d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 3
-  rate: 5
+  timer: 5
+  rate: 2
 --- !u!61 &2511276182235338388
 BoxCollider2D:
   m_ObjectHideFlags: 0

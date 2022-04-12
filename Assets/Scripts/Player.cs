@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int lifes = 3;
+    public int score = 0;
     bool _laserActive;
     
 
@@ -48,9 +50,16 @@ public class Player : MonoBehaviour
         if (!_laserActive)
         {
             Projectile projectile = this.GetComponent<Shoot>().Fire();
+            projectile.hit += IncrementScore;
             projectile.destroyed += LaserDestroyed;
             _laserActive = true;
         }
+    }
+
+    private void IncrementScore()
+    {
+        this.score += 1;
+        Debug.Log(this.score);
     }
 
     private void LaserDestroyed()
