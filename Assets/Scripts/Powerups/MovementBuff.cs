@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class MovementBuff : Buff
 {
-
     public float rate = 1;
-    
+
     public override bool ApplyBuff(Collider2D player)
     {
         player.gameObject.GetComponent<Movement>().speed *= rate;
