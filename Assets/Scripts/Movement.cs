@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     
     public void MoveRight()
     {
+        // Mathf.SmoothDamp(0, 1, , 2);
         this.transform.position -= Vector3.left * this.speed * Time.deltaTime;
     }
 

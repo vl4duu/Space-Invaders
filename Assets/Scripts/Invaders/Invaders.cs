@@ -97,6 +97,7 @@ public class Invaders : MonoBehaviour
 
             if (Random.value < (1.0f / (float) this.amountAlive * 1.1))
             {
+                invader.GetComponent<Shoot>().bulletSizeMultiplier = bulletSpeedMultiplier;
                 invader.GetComponent<Shoot>().Fire();
                 break;
             }
