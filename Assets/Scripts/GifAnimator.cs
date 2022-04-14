@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class GifAnimator : MonoBehaviour
     }
     private void Update()
     {
+
         if((timer+=Time.deltaTime) >= (duration / animatedImages.Length))
         {
             timer = 0;
@@ -25,4 +27,5 @@ public class GifAnimator : MonoBehaviour
             index = (index + 1) % animatedImages.Length;
         }
     }
+    
 }
