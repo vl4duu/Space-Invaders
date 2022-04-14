@@ -35,7 +35,6 @@ public class Console : MonoBehaviour
     {
         input.text += character;
         character = '\0';
-
         if (backspace)
         {
             string temp = input.text.Remove(input.text.Length - 1, 1);
