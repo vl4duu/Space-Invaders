@@ -8,9 +8,6 @@ public class CreateMenu : MonoBehaviour
 
     public void MakeMenuAppear()
     {
-        Debug.Log("ishappening!");
         GameObject activeMenu = Instantiate(menu, this.transform.parent, false);
-        Debug.Log(activeMenu.GetComponent<RectTransform>().position);
-        Debug.Log(activeMenu.GetComponent<RectTransform>().position);
     }
 }

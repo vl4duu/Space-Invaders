@@ -1,0 +1,7 @@
+vlad:100
+delia:150
+delia1:150
+jax:150
+maya:150
+schooby:150
+cd:0
