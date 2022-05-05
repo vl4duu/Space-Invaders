@@ -238,6 +238,7 @@ public class IOConsole : MonoBehaviour
         if (tempValue == "back") yield break;
         if (scores.PlayerExists(tempValue))
         {
+            scores.SelectPlayer(tempValue);
             MakeOutputLine("Welcome back " + tempValue + " !");
             StartCoroutine(PlayQuery());
         }
@@ -263,6 +264,8 @@ public class IOConsole : MonoBehaviour
         switch (tempValue)
         {
             case "y":
+                Instantiate(sceneTransition);
+                yield return new WaitForSeconds(1);
                 SceneManager.LoadScene("Game");
                 break;
             case "n":

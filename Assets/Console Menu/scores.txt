@@ -11,3 +11,5 @@ clear:0
 no:0
 help:0
 n:0
+v:0
+y:0
