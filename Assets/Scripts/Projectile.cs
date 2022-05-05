@@ -16,6 +16,7 @@ public class Projectile : MonoBehaviour
         {
             this.hit.Invoke();
         }
+        
         if(this.destroyed != null){
             this.destroyed.Invoke();
         }

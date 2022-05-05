@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,6 +7,8 @@ public class Shoot : MonoBehaviour
     public float bulletSizeMultiplier = 1f;
     public GameObject bullet;
     private GameObject clone;
+    [HideInInspector]
+    public bool isGamePaused;
 
     public GameObject Clone
     {
@@ -19,9 +18,18 @@ public class Shoot : MonoBehaviour
 
     public Projectile Fire()
     {
-        clone = Instantiate(bullet, this.transform.position, quaternion.identity);
-        clone.GetComponent<Projectile>().speed *= bulletSpeedMultiplier;
-        clone.transform.localScale *= bulletSizeMultiplier;
-        return clone.GetComponent<Projectile>();
+        if(!isGamePaused)
+        {
+            clone = Instantiate(bullet, this.transform.position, quaternion.identity);
+            clone.GetComponent<Projectile>().speed *= bulletSpeedMultiplier;
+            clone.transform.localScale *= bulletSizeMultiplier;
+            return clone.GetComponent<Projectile>();
+        }
+        else
+        {
+            return null;
+        }
+
+        
     }
 }

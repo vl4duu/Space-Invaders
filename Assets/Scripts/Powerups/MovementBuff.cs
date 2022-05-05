@@ -9,6 +9,7 @@ public class MovementBuff : Buff
 
     public override bool ApplyBuff(Collider2D player)
     {
+        
         player.gameObject.GetComponent<Movement>().speed *= rate;
         return true;
     }

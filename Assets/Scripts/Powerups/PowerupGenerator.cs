@@ -9,7 +9,7 @@ public class PowerupGenerator : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        InvokeRepeating(nameof(DropPowerup), 1, 1);
+        InvokeRepeating(nameof(DropPowerup), 1, 3);
     }
 
     private void DropPowerup()

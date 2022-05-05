@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -495.05, y: 345.86288}
-  m_SizeDelta: {x: 901.9879, y: 227.2811}
+  m_AnchoredPosition: {x: -495.05, y: 307.43063}
+  m_SizeDelta: {x: 901.9879, y: 304.1456}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6843698434526679138
 CanvasRenderer:
@@ -81,8 +81,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "PLAY\t\t\t\t\t\t\tboot the game.\nOPTIONS\t\t\t\t\tshow option settings.\nLEADERBOARD\t\tshows
-    leaderboard.\nEXIT\t\t\t\t\t\t\texit game.\nCLEAR\t\t\t\t\t\tclear console"
+  m_Text: "PLAY\t\t\t\t\t\t\tboot the game.\nVOLUME\t\t\t\t\t\tset volume.\nLEADERBOARD\t\tshows
+    leaderboard.\nCREDITS\t\t\t\t\tshow credits.\nCLEAR\t\t\t\t\t\tclear console\nEXIT\t\t\t\t\t\t\texit
+    game.\n"
 --- !u!61 &6926398510847476190
 BoxCollider2D:
   m_ObjectHideFlags: 0

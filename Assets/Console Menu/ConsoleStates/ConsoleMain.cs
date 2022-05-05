@@ -7,18 +7,16 @@ namespace Animations.Console_Menu.ConsoleStates
     {
         public void Enter(IOConsole console)
         {
-            Debug.Log("Entered ConsoleMenu");
+            console.ClearConsole(false);
+            console.MakeOutputLine("Swansea University [Version: 2019_2022]");
+            console.MakeOutputLine("Vlad Mutilica <1910238>");
+            console.MakeOutputLine("Type help for options!");
             console.MakeNewLine();
         }
 
         public IConsoleState Tick(IOConsole console, string input)
         {
             console.OnKeyboardInput();
-            if (input == "help")
-            {
-                console.MakeMenu(console.HelpMenu);
-                console.tempValue = null;
-            }
             if (input == "play") return new ConsolePlay();
             return null;
         }

@@ -9,7 +9,7 @@ namespace Animations.Console_Menu.ConsoleStates
 
         public void Enter(IOConsole console)
         {
-
+            
             console.StartCoroutine(console.PlaySetup());
         }
 
@@ -34,10 +34,6 @@ namespace Animations.Console_Menu.ConsoleStates
         {
             return "Play";
         }
-
-        private IConsoleState ReturnMain()
-        {
-            return new ConsoleMain();
-        }
+        
     }
 }

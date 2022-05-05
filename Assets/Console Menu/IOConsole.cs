@@ -23,14 +23,17 @@ public class IOConsole : MonoBehaviour
     public String tempValue;
     public PlayerScores scores = new PlayerScores();
     private float overflowTally;
-    public bool exitOnNo;
+    [HideInInspector] public bool exitOnNo;
+    public GameObject sceneTransition;
 
-    
 
     private void Awake()
     {
+        MakeOutputLine("Swansea University \n[Version: 2019_2022]");
+        MakeOutputLine("Vlad Mutilica <1910238>");
+        MakeOutputLine("Type help for options!");
         MakeNewLine();
-        container = this.transform.GetChild(1).GetChild(0).gameObject;
+        container = this.transform.GetChild(0).gameObject;
     }
 
     private void FixedUpdate()
@@ -40,7 +43,6 @@ public class IOConsole : MonoBehaviour
 
     private void Update()
     {
-        CheckForOverflow();
         UpdateState();
     }
 
@@ -95,6 +97,12 @@ public class IOConsole : MonoBehaviour
                                     MakeLeaderBoard(scores.getScoreList());
                                     MakeNewLine();
                                     break;
+                                case "credits":
+                                    ShowCredits();
+                                    break;
+                                case "help":
+                                    ShowHelp();
+                                    break;
                                 default:
                                     MakeNewLine();
                                     break;
@@ -115,7 +123,7 @@ public class IOConsole : MonoBehaviour
 
     public void MakeNewLine()
     {
-        activeLine = Instantiate(newline, this.transform.GetChild(1).Find("Container").transform);
+        activeLine = Instantiate(newline, this.transform.Find("Container"));
         activeLine.transform.position += Vector3.down * lower;
         lower += activeLine.GetComponent<RectTransform>().rect.height;
         String location = activeLine.GetComponent<Text>().text.Replace("*", currentState.ToString());
@@ -127,7 +135,7 @@ public class IOConsole : MonoBehaviour
     public void MakeOutputLine(String o, bool makeNewLine = false)
     {
         int lineNo = CountLineNumber(o);
-        GameObject menu = Instantiate(output, this.transform.GetChild(1).Find("Container").transform);
+        GameObject menu = Instantiate(output, this.transform.Find("Container").transform);
         menu.transform.position += Vector3.down * lower;
         menu.GetComponent<BoxCollider2D>().size = new Vector2(100, lineNo * 100);
         menu.GetComponent<Text>().text = o;
@@ -145,12 +153,21 @@ public class IOConsole : MonoBehaviour
         }
     }
 
-    public void MakeMenu(GameObject obj)
+    public void ShowHelp()
     {
-        GameObject menu = Instantiate(obj, this.transform.GetChild(1).Find("Container").transform);
-        lower += activeLine.GetComponent<RectTransform>().rect.height;
-        menu.transform.position += Vector3.down * lower;
-        lower += menu.GetComponent<RectTransform>().rect.height;
+        MakeOutputLine(">>  Play -> Boot the game.");
+        MakeOutputLine(">> Back -> Go back to main menu");
+        MakeOutputLine(">>  Leaderboard -> Shows leaderboard.");
+        MakeOutputLine(">>  Clear  -> Clear console.");
+        MakeOutputLine(">>  Credits -> Show credits.");
+        MakeNewLine();
+    }
+
+    private void ShowCredits()
+    {
+        MakeOutputLine(">>  Menu background by ");
+        MakeOutputLine(">>  Game background by Moot");
+        MakeOutputLine(">>  Menu music by");
         MakeNewLine();
     }
 
@@ -175,7 +192,7 @@ public class IOConsole : MonoBehaviour
     public void MoveUp()
     {
         Destroy(container.transform.GetChild(0).gameObject);
-        if (container.transform.childCount > 20)
+        if (container.transform.childCount > 25)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -192,7 +209,7 @@ public class IOConsole : MonoBehaviour
         container.transform.position += Vector3.down * overflowTally;
     }
 
-    public void ClearConsole()
+    public void ClearConsole(bool newLine = true)
     {
         foreach (Transform child in container.transform)
         {
@@ -202,7 +219,7 @@ public class IOConsole : MonoBehaviour
         ResetHeight();
         lower = 0;
         overflowTally = 0;
-        MakeNewLine();
+        if (newLine) MakeNewLine();
     }
 
 
@@ -231,13 +248,12 @@ public class IOConsole : MonoBehaviour
             MakeOutputLine("Player added !");
             StartCoroutine(PlayQuery());
         }
-
     }
 
     public IEnumerator PlayQuery()
     {
         MakeOutputLine("Do you want to play? (Y/N)", true);
-            
+
         tempValue = null;
         while (tempValue == null)
         {
@@ -252,8 +268,6 @@ public class IOConsole : MonoBehaviour
             case "n":
                 exitOnNo = true;
                 break;
-
         }
     }
-
 }

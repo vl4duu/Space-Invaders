@@ -1,47 +1,61 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Animations.Console_Menu;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public int lifes = 3;
-    public int score = 0;
+    public int score;
     bool _laserActive;
+    public PlayerScores scores;
+    public GameObject explosion;
+    public GameObject GameOverScreen;
+    public bool deathTrigger;
+    [HideInInspector] public bool isGamePaused;
+    [HideInInspector] public float acceleration = 50f;
+
+    private void Start()
+    {
+        scores = new PlayerScores();
+    }
     
-
-    public System.Action dead;
-
-
+    
+    
     private void Update()
     {
-        if (lifes <= 0)
+
+
+        //Death
+        if (lifes <= 0 && !deathTrigger)
         {
-            Destroy(this.gameObject);
+            deathTrigger = true;
+            Instantiate(explosion, this.transform.position, Quaternion.identity);
+            StartCoroutine(OnDeath());
         }
-        Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
+
 
         // Movement
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
+        if ((Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && this.transform.position.x >= (leftEdge.x + 1f) )
         {
-            if (this.transform.position.x >= (leftEdge.x + 1f))
-            {
-                this.GetComponent<Movement>().MoveLeft();
-            }
+            this.GetComponent<Movement>().MoveLeft();
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && this.transform.position.x <= (rightEdge.x - 1f))
         {
-            if (this.transform.position.x <= (rightEdge.x - 1f))
-            {
-                this.GetComponent<Movement>().MoveRight();
-            }
+            this.GetComponent<Movement>().MoveRight();
         }
+
 
         // Shooting
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            if (!isGamePaused)
+            {
+                Shoot();
+            }
         }
     }
 
@@ -59,7 +73,6 @@ public class Player : MonoBehaviour
     private void IncrementScore()
     {
         this.score += 1;
-        Debug.Log(this.score);
     }
 
     private void LaserDestroyed()
@@ -74,5 +87,17 @@ public class Player : MonoBehaviour
             this.lifes -= 1;
             Debug.Log(this.lifes + " lifes left");
         }
+
+    }
+
+    private IEnumerator OnDeath()
+    {
+        Debug.Log("OnDeathStarted");
+        scores.SaveScores();
+        scores.UpdateScore(score);
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        yield return new WaitForSeconds(2);
+        GameOverScreen.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

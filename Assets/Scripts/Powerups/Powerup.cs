@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Powerup : Projectile
 {
-    public bool isActive = false;
+    public bool isActive;
     
     private void OnTriggerEnter2D(Collider2D other)
     {
