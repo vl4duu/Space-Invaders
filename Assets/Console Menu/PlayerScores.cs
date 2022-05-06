@@ -23,7 +23,6 @@ namespace Animations.Console_Menu
                 LoadLeaderboard();
             }
             
-            DontDestroyOnLoad(this.gameObject);
         }
 
         public void AddPlayer(String pname, int score = 0)
