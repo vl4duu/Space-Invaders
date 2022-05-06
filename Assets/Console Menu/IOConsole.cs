@@ -149,7 +149,7 @@ public class IOConsole : MonoBehaviour
         MakeOutputLine("LeaderBoard");
         for (int i = 0; i < list.Count; i++)
         {
-            MakeOutputLine(list[i]);
+            MakeOutputLine(">>" + list[i]);
         }
     }
 
@@ -165,9 +165,9 @@ public class IOConsole : MonoBehaviour
 
     private void ShowCredits()
     {
-        MakeOutputLine(">>  Menu background by ");
-        MakeOutputLine(">>  Game background by Moot");
-        MakeOutputLine(">>  Menu music by");
+        MakeOutputLine(">>  Menu background by Kenze Wee");
+        MakeOutputLine(">>  Game background by VulpsVulps");
+        MakeOutputLine(">>  Menu music by Moot");
         MakeNewLine();
     }
 

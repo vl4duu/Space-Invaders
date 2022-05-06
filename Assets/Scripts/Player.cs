@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
     bool _laserActive;
     public PlayerScores scores;
     public GameObject explosion;
-    public GameObject GameOverScreen;
-    public bool deathTrigger;
+    [HideInInspector] public GameObject GameOverScreen;
+    [HideInInspector] public bool deathTrigger;
     [HideInInspector] public bool isGamePaused;
     [HideInInspector] public float acceleration = 50f;
 
@@ -20,13 +20,10 @@ public class Player : MonoBehaviour
     {
         scores = new PlayerScores();
     }
-    
-    
-    
+
+
     private void Update()
     {
-
-
         //Death
         if (lifes <= 0 && !deathTrigger)
         {
@@ -34,19 +31,7 @@ public class Player : MonoBehaviour
             Instantiate(explosion, this.transform.position, Quaternion.identity);
             StartCoroutine(OnDeath());
         }
-
-
-        // Movement
-        Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
-        if ((Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && this.transform.position.x >= (leftEdge.x + 1f) )
-        {
-            this.GetComponent<Movement>().MoveLeft();
-        }
-        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && this.transform.position.x <= (rightEdge.x - 1f))
-        {
-            this.GetComponent<Movement>().MoveRight();
-        }
+        
 
 
         // Shooting
@@ -87,7 +72,6 @@ public class Player : MonoBehaviour
             this.lifes -= 1;
             Debug.Log(this.lifes + " lifes left");
         }
-
     }
 
     private IEnumerator OnDeath()

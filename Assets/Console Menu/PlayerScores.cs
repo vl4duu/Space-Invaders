@@ -12,7 +12,6 @@ namespace Animations.Console_Menu
             new Dictionary<string, int>();
 
         static String currentPlayer;
-
         public String CurrentPlayer
         {
             get { return currentPlayer; }
