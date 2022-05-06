@@ -11,7 +11,6 @@ public class GameOverMenu : MonoBehaviour
 
     public IEnumerator MakeButtonsAppear()
     {
-        Debug.Log("Buttons appear");
         retryButton.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         backButton.SetActive(true);
@@ -19,14 +18,14 @@ public class GameOverMenu : MonoBehaviour
 
     public void OnRetry()
     {
-        Debug.Log("Retry has been pressed");
+        
         SceneManager.LoadScene("Game");
 
     }
 
     public void OnBack()
     {
-        Debug.Log("BackHasBeenPressed");
+        
         SceneManager.LoadScene("Menu");
     }
 

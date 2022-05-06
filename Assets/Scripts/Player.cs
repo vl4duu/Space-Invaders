@@ -9,16 +9,17 @@ public class Player : MonoBehaviour
     public int lifes = 3;
     public int score;
     bool _laserActive;
-    public PlayerScores scores;
     public GameObject explosion;
     [HideInInspector] public GameObject GameOverScreen;
     [HideInInspector] public bool deathTrigger;
     [HideInInspector] public bool isGamePaused;
     [HideInInspector] public float acceleration = 50f;
+    public GameObject scoreManager;
+    public PlayerScores leaderboard;
 
     private void Start()
     {
-        scores = new PlayerScores();
+        leaderboard = gameObject.GetComponent<PlayerScores>();
     }
 
 
@@ -77,8 +78,12 @@ public class Player : MonoBehaviour
     private IEnumerator OnDeath()
     {
         Debug.Log("OnDeathStarted");
-        scores.SaveScores();
-        scores.UpdateScore(score);
+        int? previousScore = leaderboard.GetPlayerScore(PlayerScores.currentPlayer);
+        if (score > previousScore)
+        {
+            leaderboard.UpdatePlayerScore(score);
+            leaderboard.SaveLeaderboard();
+        }
         this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(2);
         GameOverScreen.SetActive(true);

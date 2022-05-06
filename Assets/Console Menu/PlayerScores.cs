@@ -6,68 +6,45 @@ using UnityEngine;
 
 namespace Animations.Console_Menu
 {
-    public class PlayerScores
+    public class PlayerScores : MonoBehaviour
     {
-        static Dictionary<String, int> dictionary =
-            new Dictionary<string, int>();
+        private Highscores leaderboard;
+        public static String currentPlayer;
 
-        static String currentPlayer;
-        public String CurrentPlayer
+        private void Awake()
         {
-            get { return currentPlayer; }
-        }
-
-        public PlayerScores()
-        {
-            PopulateDict();
-        }
-        
-        public bool PlayerExists(String input)
-        {
-            return dictionary.ContainsKey(input);
-        }
-
-        public void AddPlayer(String name)
-        {
-            dictionary.Add(name, 0);
-        }
-
-        public void UpdateScore(String name, int score)
-        {
-            dictionary[name] = score;
-        }
-
-        public void SaveScores()
-        {
-            using (StreamWriter file = new StreamWriter("Assets/Console Menu/scores.txt"))
-                foreach (var entry in dictionary)
-                    file.WriteLine("{0}:{1}", entry.Key, entry.Value);
-        }
-
-        public void PopulateDict()
-        {
-            var lines = File.ReadAllLines("Assets/Console Menu/scores.txt");
-            for (var i = 0; i < lines.Length; i++)
+            if (PlayerPrefs.HasKey("LB"))
             {
-                String[] pair = lines[i].Split(':');
-                string name = pair[0];
-                int score = Int32.Parse(pair[1]);
-                if (!dictionary.ContainsKey(name))
-                {
-                    dictionary.Add(name, score);
-                }
+                LoadLeaderboard();    
             }
+            else
+            {
+                PlayerPrefs.SetString("LB",JsonUtility.ToJson(new Highscores()));
+                LoadLeaderboard();
+            }
+            
+            DontDestroyOnLoad(this.gameObject);
         }
 
-        public List<String> getScoreList()
+        public void AddPlayer(String pname, int score = 0)
         {
-            List<String> res = new List<string>();
-            foreach (KeyValuePair<string, int> entry in dictionary)
-            {
-                res.Add("\t\t" + entry.Key + ":" + entry.Value);
-            }
+            leaderboard.playerScoresList.Add(new PlayerScore {name = pname, score = score});
+            SaveLeaderboard();
+        }
 
-            return res;
+
+        public void SaveLeaderboard()
+        {
+            string json = JsonUtility.ToJson(leaderboard);
+            PlayerPrefs.SetString("LB", json);
+            PlayerPrefs.Save();
+        }
+
+        void LoadLeaderboard()
+        {
+            String json = PlayerPrefs.GetString("LB");
+            Highscores highscores = (Highscores) JsonUtility.FromJson(json, typeof(Highscores));
+            leaderboard = highscores;
         }
 
         public void SelectPlayer(String name)
@@ -75,14 +52,67 @@ namespace Animations.Console_Menu
             currentPlayer = name;
         }
 
-        public void UpdateScore(int score)
+        public List<string> GetScoreList()
         {
-            if (score > dictionary[currentPlayer])
+            List<String> outputScores = new List<string>();
+            foreach (PlayerScore entry in leaderboard.playerScoresList)
             {
-                dictionary[currentPlayer] = score;
+                outputScores.Add(entry.name + ": " + entry.score);
             }
-            
-            SaveScores();
+
+            return outputScores;
         }
+
+        public bool PlayerExists(String name)
+        {
+            foreach (PlayerScore entry in leaderboard.playerScoresList)
+            {
+                if (entry.name == name) return true;
+            }
+
+            return false;
+        }
+
+        public int? GetPlayerScore(String pname)
+        {
+            foreach (PlayerScore entry in leaderboard.playerScoresList)
+            {
+                if (pname == entry.name)
+                {
+                    return entry.score;
+                }
+            }
+
+            return null;
+        }
+
+        public void UpdatePlayerScore(int givenScore)
+        {
+            
+            foreach (PlayerScore entry in leaderboard.playerScoresList)
+            {
+                if (entry.name == currentPlayer)
+                {
+                    entry.score = givenScore;
+                }
+            }
+            SaveLeaderboard();
+        }
+    }
+
+    class Highscores
+    {
+        public List<PlayerScore> playerScoresList;
+    }
+
+
+    /*
+     * Entry
+     */
+    [Serializable]
+    class PlayerScore
+    {
+        public String name;
+        public int score;
     }
 }

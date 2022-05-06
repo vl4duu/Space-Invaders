@@ -6,6 +6,7 @@ using Animations.Console_Menu;
 using Animations.Console_Menu.ConsoleStates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class IOConsole : MonoBehaviour
@@ -21,14 +22,16 @@ public class IOConsole : MonoBehaviour
     private GameObject container;
     public IConsoleState currentState = new ConsoleMain();
     public String tempValue;
-    public PlayerScores scores = new PlayerScores();
     private float overflowTally;
     [HideInInspector] public bool exitOnNo;
     public GameObject sceneTransition;
-
+    public GameObject scoreManager;
+    private PlayerScores leaderboard;
+    
 
     private void Awake()
     {
+        leaderboard = scoreManager.GetComponent<PlayerScores>();
         MakeOutputLine("Swansea University \n[Version: 2019_2022]");
         MakeOutputLine("Vlad Mutilica <1910238>");
         MakeOutputLine("Type help for options!");
@@ -94,7 +97,8 @@ public class IOConsole : MonoBehaviour
                                 case "play":
                                     break;
                                 case "leaderboard":
-                                    MakeLeaderBoard(scores.getScoreList());
+                                    
+                                    MakeLeaderBoard(leaderboard.GetScoreList());
                                     MakeNewLine();
                                     break;
                                 case "credits":
@@ -102,6 +106,9 @@ public class IOConsole : MonoBehaviour
                                     break;
                                 case "help":
                                     ShowHelp();
+                                    break;
+                                case "quit":
+                                    Application.Quit();
                                     break;
                                 default:
                                     MakeNewLine();
@@ -160,6 +167,7 @@ public class IOConsole : MonoBehaviour
         MakeOutputLine(">>  Leaderboard -> Shows leaderboard.");
         MakeOutputLine(">>  Clear  -> Clear console.");
         MakeOutputLine(">>  Credits -> Show credits.");
+        MakeOutputLine(">> Quit -> Exit the game");
         MakeNewLine();
     }
 
@@ -225,30 +233,29 @@ public class IOConsole : MonoBehaviour
 
     public IEnumerator PlaySetup()
     {
-        scores.PopulateDict();
-        MakeLeaderBoard(scores.getScoreList());
+        MakeLeaderBoard(leaderboard.GetScoreList());
         MakeOutputLine("What is your name?", true);
-        // CheckForOverflow();
+        CheckForOverflow();
         Debug.Log(!Input.GetKeyDown(KeyCode.Return));
         while (!Input.GetKeyDown(KeyCode.Return))
         {
             yield return null;
         }
-
+        
         if (tempValue == "back") yield break;
-        if (scores.PlayerExists(tempValue))
+        if (leaderboard.PlayerExists(tempValue))
         {
-            scores.SelectPlayer(tempValue);
+            leaderboard.SelectPlayer(tempValue);
             MakeOutputLine("Welcome back " + tempValue + " !");
             StartCoroutine(PlayQuery());
         }
         else
         {
-            scores.AddPlayer(tempValue);
-            scores.SaveScores();
+            leaderboard.AddPlayer(tempValue);
             MakeOutputLine("Player added !");
             StartCoroutine(PlayQuery());
         }
+        yield return null;
     }
 
     public IEnumerator PlayQuery()

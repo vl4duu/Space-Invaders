@@ -21,6 +21,7 @@ namespace Animations.Console_Menu.ConsoleStates
                 console.exitOnNo = false;
                 return new ConsoleMain();
             }
+            if (input == "quit") Application.Quit();
             if (input == "back") return new ConsoleMain();
             return null;
         }

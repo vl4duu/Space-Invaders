@@ -2317,6 +2317,7 @@ GameObject:
   - component: {fileID: 1464412817}
   - component: {fileID: 1464412818}
   - component: {fileID: 1464412819}
+  - component: {fileID: 1464412820}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2434,6 +2435,8 @@ MonoBehaviour:
   deathTrigger: 0
   isGamePaused: 0
   acceleration: 50
+  scoreManager: {fileID: 0}
+  leaderboard: {fileID: 0}
 --- !u!50 &1464412817
 Rigidbody2D:
   serializedVersion: 4
@@ -2483,7 +2486,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c152062863322714faf247f5e10bbb7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 15
+--- !u!114 &1464412820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464412812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a1c8adda794d03a63126c562603b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPlayer: 
 --- !u!1 &1528249138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9106362906057927761, guid: 1541963d0bc00c64083bc960483fdf9f, type: 3}
